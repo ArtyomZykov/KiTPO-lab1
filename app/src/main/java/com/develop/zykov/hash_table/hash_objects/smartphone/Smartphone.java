@@ -1,14 +1,11 @@
 package com.develop.zykov.hash_table.hash_objects.smartphone;
 
-import com.develop.zykov.hash_table.hash_table_first.HashTableItem;
+import com.develop.zykov.hash_table.hash_table.IUserType;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Comparator;
-
-public class Smartphone implements HashTableItem {
+public class Smartphone implements IUserType {
 
     private final Double diagonal;
     private final boolean fiveG;
@@ -20,19 +17,24 @@ public class Smartphone implements HashTableItem {
         this.fiveG = fiveG;
     }
 
+    public Smartphone() {
+        this.diagonal = null;
+        this.fiveG = false;
+    }
+
     @Override
     public String toString() {
         return "diagonal - " + this.diagonal + " fiveG - " + this.fiveG;
     }
 
     @Override
-    public HashTableItem copy() {
+    public IUserType copy() {
         return new Smartphone(this.diagonal, this.fiveG);
     }
 
     @Override
-    public HashTableItem create() {
-        return null;
+    public IUserType create() {
+        return new Smartphone();
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Smartphone implements HashTableItem {
     }
 
     @Override
-    public HashTableItem parseValue(JSONObject json) {
+    public IUserType parseValue(JSONObject json) {
         try {
             return new Smartphone(
                     (Double) json.get("diagonal"),
@@ -50,20 +52,5 @@ public class Smartphone implements HashTableItem {
         } catch (JSONException e) {
             return null;
         }
-    }
-
-    @Override
-    public HashTableItem readValue(String json) {
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            return parseValue(jsonObject);
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public Comparator getTypeComparator() {
-        return new SortSmartphoneByDiagonal();
     }
 }

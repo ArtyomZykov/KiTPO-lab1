@@ -1,4 +1,4 @@
-package com.develop.zykov.hash_table.hash_table_first;
+package com.develop.zykov.hash_table.hash_table;
 
 import java.util.Comparator;
 

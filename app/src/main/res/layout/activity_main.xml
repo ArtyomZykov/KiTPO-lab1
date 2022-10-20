@@ -33,41 +33,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFileName" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextValueAdd"
-        tools:listitem="@layout/recyclerview_item" />
-
-    <Button
-        android:id="@+id/buttonSort"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Sort"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonRemove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonRemove" />
-
     <EditText
         android:id="@+id/editTextKeyRemove"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="key"
         android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
+        app:layout_constraintEnd_toEndOf="@+id/editTextKeyAdd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/downloadJsonButton" />
 
@@ -75,12 +50,13 @@
         android:id="@+id/buttonRemove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:backgroundTint="#347847"
         android:text="Remove"
         app:layout_constraintBottom_toBottomOf="@+id/editTextKeyRemove"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSort"
-        app:layout_constraintTop_toTopOf="@+id/editTextKeyRemove" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextKeyRemove"
+        app:layout_constraintTop_toTopOf="@+id/editTextKeyRemove"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editTextKeyAdd"
@@ -106,27 +82,44 @@
         android:hint="json value"
         android:inputType="textLongMessage"
         android:lines="5"
-        app:layout_constraintEnd_toStartOf="@+id/buttonEdit"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextKeyAdd" />
 
     <Button
-        android:id="@+id/buttonEdit"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonAdd"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="Edit"
+        android:text="Add/nEdit"
         app:layout_constraintBottom_toBottomOf="@+id/editTextValueAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextKeyAdd" />
-
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Add"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextKeyAdd"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editTextKeyAdd" />
+
+    <HorizontalScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextValueAdd">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/hashtableResultText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </ScrollView>
+    </HorizontalScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
