@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.develop.zykov.hash_table.databinding.ActivityMainBinding;
+import com.develop.zykov.hash_table.hash_objects.integer.MyInteger;
 import com.develop.zykov.hash_table.hash_objects.smartphone.Smartphone;
+import com.develop.zykov.hash_table.hash_objects.string.MyString;
 import com.develop.zykov.hash_table.hash_table.HashTable;
 
 import org.json.JSONArray;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         getStoragePermission();
         initListeners();
 
-        binding.editTextFileName.setText("jsonSample");
+        binding.editTextFileName.setText("smartphoneSample");
         binding.editTextValueAdd.setText("{\"diagonal\": 0.253,\"five_g\": true}");
     }
 
@@ -107,7 +109,17 @@ public class MainActivity extends AppCompatActivity {
             switch (jsonArrayClass) {
                 case "Smartphone": {
                     hashTable = new HashTable<Integer, Smartphone>();
-                    hashTable.add(jsonArray.length() + 1, new Smartphone(0.0009, true));
+                    hashTable.add(jsonArray.length() + 1, new Smartphone());
+                    break;
+                }
+                case "Integer": {
+                    hashTable = new HashTable<Integer, MyInteger>();
+                    hashTable.add(jsonArray.length() + 1, new MyInteger());
+                    break;
+                }
+                case "String": {
+                    hashTable = new HashTable<Integer, MyString>();
+                    hashTable.add(jsonArray.length() + 1, new MyString());
                     break;
                 }
                 default:
@@ -130,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private void displayHashTable() {
         String table = hashTable.showFillingUniformity();
         binding.hashtableResultText.setText(table);
-        Log.e("displayHashTable", table);
+        Log.e("displayHashTable", "displayHashTable\n" + table);
     }
 
     private void getStoragePermission() {
