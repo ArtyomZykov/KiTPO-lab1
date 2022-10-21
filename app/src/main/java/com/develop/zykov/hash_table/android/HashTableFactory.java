@@ -19,7 +19,8 @@ public class HashTableFactory {
 
     private IUserType findHashTableClass(String className) {
         for (IUserType classItem : list) {
-            if (classItem.getClassName() == className) {
+            System.out.println(classItem.getClassName());
+            if (classItem.getClassName().contains(className)) {
                 hashTableClass = classItem;
                 return hashTableClass;
             }

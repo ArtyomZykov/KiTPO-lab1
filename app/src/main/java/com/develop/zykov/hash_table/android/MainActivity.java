@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Integer key = Integer.parseInt(binding.editTextKeyAdd.getText().toString());
                     JSONObject valueJson = new JSONObject(binding.editTextValueAdd.getText().toString());
-                    factory.hashTable.add(valueJson);
+                    // factory.hashTable.add(valueJson);
                     displayHashTable();
                 } catch (JSONException e) {
                     e.printStackTrace();
