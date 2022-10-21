@@ -2,39 +2,24 @@
   "data_class": "Smartphone",
   "data": [
     {
-      "key": 1,
-      "object": {
-        "diagonal": 0.253,
-        "five_g": true
-      }
+      "diagonal": 0.253,
+      "five_g": true
     },
     {
-      "key": 2,
-      "object": {
-        "diagonal": 30.23,
-        "five_g": true
-      }
+      "diagonal": 30.23,
+      "five_g": true
     },
     {
-      "key": 3,
-      "object": {
-        "diagonal": 20.23,
-        "five_g": true
-      }
+      "diagonal": 20.23,
+      "five_g": true
     },
     {
-      "key": 4,
-      "object": {
-        "diagonal": 10.23,
-        "five_g": true
-      }
+      "diagonal": 10.23,
+      "five_g": true
     },
     {
-      "key": 5,
-      "object": {
-        "diagonal": 0.23,
-        "five_g": true
-      }
+      "diagonal": 0.23,
+      "five_g": true
     }
   ]
 }

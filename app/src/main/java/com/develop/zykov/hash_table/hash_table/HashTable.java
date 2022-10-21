@@ -2,7 +2,9 @@ package com.develop.zykov.hash_table.hash_table;
 
 import org.json.JSONObject;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 // A node of chains
@@ -23,15 +25,14 @@ class HashNode<K, V> {
 }
 
 // Class to represent entire hash table
-public class HashTable<K, V extends IUserType> {
+public class HashTable<V extends IUserType> {
 
     // bucketArray is used to store array of chains
-    private ArrayList<HashNode<K, V>> bucketArray;
+    private ArrayList<HashNode<String, V>> bucketArray;
     // Current capacity of array list
     private int numBuckets;
     // Current size of array list
     private int size;
-    private V valueType = null;
 
     // Constructor (Initializes capacity, size and
     // empty chains.
@@ -49,27 +50,28 @@ public class HashTable<K, V extends IUserType> {
         return size() == 0;
     }
 
-    private final int hashCode(K key) {
-        // Чтобы избежать отрицательного индекса
+    private final int hashCode(String key) {
+        // 0x7FFFFFFF - чтобы избежать отрицательного индекса
+        // в последствии
         return (Objects.hashCode(key) & 0x7FFFFFFF);
     }
 
     // This implements hash function to find index
     // for a key
-    private int getBucketIndex(K key) {
+    private int getBucketIndex(String key) {
         int hashCode = hashCode(key);
         return hashCode % numBuckets;
     }
 
     // Method to remove a given key
-    public V remove(K key) {
+    public V remove(String key) {
         // Apply hash function to find index for given key
         int bucketIndex = getBucketIndex(key);
         int hashCode = hashCode(key);
         // Get head of chain
-        HashNode<K, V> head = bucketArray.get(bucketIndex);
+        HashNode<String, V> head = bucketArray.get(bucketIndex);
         // Search for key in its chain
-        HashNode<K, V> prev = null;
+        HashNode<String, V> prev = null;
         while (head != null) {
             // If Key found
             if (head.key.equals(key) && hashCode == head.hashCode) break;
@@ -88,12 +90,11 @@ public class HashTable<K, V extends IUserType> {
     }
 
     // Returns value for a key
-    public V get(K key) {
+    public V get(String key) {
         // Find head of chain for given key
         int bucketIndex = getBucketIndex(key);
         int hashCode = hashCode(key);
-        HashNode<K, V> head = bucketArray.get(bucketIndex);
-
+        HashNode<String, V> head = bucketArray.get(bucketIndex);
         // Search key in chain
         while (head != null) {
             if (head.key.equals(key) && head.hashCode == hashCode)
@@ -104,21 +105,13 @@ public class HashTable<K, V extends IUserType> {
         return null;
     }
 
-    // Парсинг из Json и добавление
-    public boolean parsPut(K key, JSONObject jsonValue) {
-        if (valueType == null) return false;
-        IUserType value = valueType.parseValue(jsonValue);
-        add(key, (V) value);
-        return true;
-    }
-
     // Adds a key value pair to hash
-    public void add(K key, V value) {
-        valueType = value;
+    public void add(V value) {
+        String key = value.getKey();
         // Find head of chain for given key
         int bucketIndex = getBucketIndex(key);
         int hashCode = hashCode(key);
-        HashNode<K, V> head = bucketArray.get(bucketIndex);
+        HashNode<String, V> head = bucketArray.get(bucketIndex);
         // Check if key is already present
         while (head != null) {
             if (head.key.equals(key) && head.hashCode == hashCode) {
@@ -130,35 +123,48 @@ public class HashTable<K, V extends IUserType> {
         // Insert key in chain
         size++;
         head = bucketArray.get(bucketIndex);
-        HashNode<K, V> newNode = new HashNode<K, V>(key, value, hashCode);
+        HashNode<String, V> newNode = new HashNode<String, V>(key, value, hashCode);
         newNode.next = head;
         bucketArray.set(bucketIndex, newNode);
         // If load factor goes beyond threshold, then
         // double hash table size
         if ((1.0 * size) / numBuckets >= 0.8) {
-            ArrayList<HashNode<K, V>> temp = bucketArray;
+            ArrayList<HashNode<String, V>> temp = bucketArray;
             bucketArray = new ArrayList<>();
             numBuckets = 2 * numBuckets;
             size = 0;
             for (int i = 0; i < numBuckets; i++) bucketArray.add(null);
-            for (HashNode<K, V> headNode : temp) {
+            for (HashNode<String, V> headNode : temp) {
                 while (headNode != null) {
-                    add(headNode.key, headNode.value);
+                    add(headNode.value);
                     headNode = headNode.next;
                 }
             }
         }
     }
 
+    public List<IUserType> getAll() {
+        List<IUserType> res = null;
+        for (int i = 0; i < numBuckets; i++) {
+            HashNode<String, V> head = bucketArray.get(i);
+            while (head != null) {
+                res.add(head.value);
+                head = head.next;
+            }
+        }
+        return res;
+    }
+
     public String showFillingUniformity() {
         String res = "";
         for (int i = 0; i < numBuckets; i++) {
             res += "{" + i + "}\t\t";
-            HashNode<K, V> head = bucketArray.get(i);
+            HashNode<String, V> head = bucketArray.get(i);
             if (head == null) res += "null -> ";
             // Check if key is already present
             while (head != null) {
-                res += "(key=" + head.key.toString() + " val=" +  head.value.toString() + ") -> ";
+                res += "(key=" + head.key.toString() + " val=" +
+                        head.value.toString() + ") -> ";
                 head = head.next;
             }
             res += "\n";

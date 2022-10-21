@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private String workedFileName = "";
-    HashTable hashTable;
+    HashTableFactory factory = new HashTableFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         getStoragePermission();
         initListeners();
 
-        binding.editTextFileName.setText("smartphoneSample");
-        binding.editTextValueAdd.setText("{\"diagonal\": 0.253,\"five_g\": true}");
+        binding.editTextFileName.setText("stringSample");
+        binding.editTextValueAdd.setText("{\"string\": \"str_1\"}");
     }
 
     private void initListeners() {
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    hashTable.remove(Integer.parseInt(binding.editTextKeyRemove.getText().toString()));
+                    factory.hashTable.remove(binding.editTextKeyRemove.getText().toString());
                     displayHashTable();
                 } catch (Exception e) {
                 }
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Integer key = Integer.parseInt(binding.editTextKeyAdd.getText().toString());
                     JSONObject valueJson = new JSONObject(binding.editTextValueAdd.getText().toString());
-                    hashTable.parsPut(key, valueJson);
+                    factory.hashTable.add(valueJson);
                     displayHashTable();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -100,39 +100,9 @@ public class MainActivity extends AppCompatActivity {
             bufferedReader.close();
             String response = stringBuilder.toString();
 
-
             JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = (JSONArray) jsonObject.get("data");
-            if (jsonArray.length() == 0) return;
-            String jsonArrayClass = jsonObject.get("data_class").toString();
 
-            switch (jsonArrayClass) {
-                case "Smartphone": {
-                    hashTable = new HashTable<Integer, Smartphone>();
-                    hashTable.add(jsonArray.length() + 1, new Smartphone());
-                    break;
-                }
-                case "Integer": {
-                    hashTable = new HashTable<Integer, MyInteger>();
-                    hashTable.add(jsonArray.length() + 1, new MyInteger());
-                    break;
-                }
-                case "String": {
-                    hashTable = new HashTable<Integer, MyString>();
-                    hashTable.add(jsonArray.length() + 1, new MyString());
-                    break;
-                }
-                default:
-                    return;
-            }
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonArrayItem = (JSONObject) jsonArray.get(i);
-                JSONObject jsonItemObject = (JSONObject) jsonArrayItem.get("object");
-
-                hashTable.parsPut(jsonArrayItem.get("key"), jsonItemObject);
-            }
-            hashTable.remove(jsonArray.length() + 1);
-
+            factory.parsFromJson(jsonObject);
             displayHashTable();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -140,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayHashTable() {
-        String table = hashTable.showFillingUniformity();
+        String table = factory.hashTable.showFillingUniformity();
         binding.hashtableResultText.setText(table);
         Log.e("displayHashTable", "displayHashTable\n" + table);
     }

@@ -37,4 +37,12 @@ public class MyString implements IUserType {
             return null;
         }
     }
+
+    @Override
+    public String getKey() { return data; }
+
+    @Override
+    public String packValue() {
+        return "{\"string\":\"" + data + "\"}";
+    }
 }

@@ -37,5 +37,13 @@ public class MyInteger implements IUserType {
             return null;
         }
     }
+
+    @Override
+    public String getKey() { return data.toString(); }
+
+    @Override
+    public String packValue() {
+        return "{\"integer\":" + data.toString() + "}";
+    }
 }
 

@@ -2,34 +2,19 @@
   "data_class": "Integer",
   "data": [
     {
-      "key": 1,
-      "object": {
-        "integer": 4535
-      }
+      "integer": 4535
     },
     {
-      "key": 2,
-      "object": {
-        "integer": 1233
-      }
+      "integer": 1233
     },
     {
-      "key": 3,
-      "object": {
-        "integer": 123
-      }
+      "integer": 123
     },
     {
-      "key": 4,
-      "object": {
-        "integer": 12335
-      }
+      "integer": 12335
     },
     {
-      "key": 5,
-      "object": {
-        "integer": 451235
-      }
+      "integer": 451235
     }
   ]
 }

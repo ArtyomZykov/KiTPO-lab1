@@ -53,4 +53,13 @@ public class Smartphone implements IUserType {
             return null;
         }
     }
+
+    @Override
+    public String getKey() { return diagonal.toString(); }
+
+    @Override
+    public String packValue() {
+        return "{\"diagonal\":" + diagonal.toString()
+                + ",\"five_g\":" + fiveG + "}";
+    }
 }

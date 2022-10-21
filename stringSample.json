@@ -2,34 +2,19 @@
   "data_class": "String",
   "data": [
     {
-      "key": 1,
-      "object": {
-        "string": "first"
-      }
+      "string": "first"
     },
     {
-      "key": 2,
-      "object": {
-        "string": "second"
-      }
+      "string": "second"
     },
     {
-      "key": 3,
-      "object": {
-        "string": "third"
-      }
+      "string": "third"
     },
     {
-      "key": 4,
-      "object": {
-        "string": "asdfa"
-      }
+      "string": "asdfa"
     },
     {
-      "key": 5,
-      "object": {
-        "string": "fiasdfrst"
-      }
+      "string": "fiasdfrst"
     }
   ]
 }

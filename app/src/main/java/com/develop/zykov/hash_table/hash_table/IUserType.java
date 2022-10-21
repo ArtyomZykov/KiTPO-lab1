@@ -7,5 +7,8 @@ public interface IUserType {
     public IUserType copy();
     public IUserType create();
     public String getClassName();
-    public IUserType parseValue(JSONObject json); // Парсинг значения из Json в объект
+    public String getKey();
+    // Парсинг значения из Json в объект
+    public IUserType parseValue(JSONObject json);
+    public String packValue();
 }
